@@ -74,7 +74,7 @@ function toReadable(num) {
     }
     if (num < 1000) {
         return (
-            oneNum[Math.floor(numb / 100)] +
+            oneNum[Math.floor(num / 100)] +
             " " +
             thousands[0] +
             (num % 100 !== 0 ? " " + toReadable(num % 100) : "")
