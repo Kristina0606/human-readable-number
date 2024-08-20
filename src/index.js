@@ -12,7 +12,7 @@ function toReadable(num) {
         "nine",
     ]; // от 1 до 9
     const teens = [
-        "",
+        "ten",
         "eleven",
         "twelve",
         "thirteen",
@@ -22,10 +22,10 @@ function toReadable(num) {
         "seventeen",
         "eighteen",
         "nineteen",
-    ]; // от 11 до 19
+    ]; // от 10 до 19
     const tens = [
         "",
-        "ten",
+        "",
         "twenty",
         "thirty",
         "forty",
@@ -34,7 +34,7 @@ function toReadable(num) {
         "seventy",
         "eighty",
         "ninety",
-    ]; // десятки 10, 20, и т д
+    ]; // десятки 20, 30, и т.д.
     const hundreds = [
         "",
         "one hundred",
@@ -48,8 +48,6 @@ function toReadable(num) {
         "nine hundred",
     ]; // сотни
 
-    const thousands = ["hundred", "thousand"];
-
     if (num === 0) {
         return "zero";
     }
@@ -57,30 +55,25 @@ function toReadable(num) {
     let toWords = "";
 
     if (num >= 100) {
-        toWords = hundreds[Math.floor(num / 100)] + " ";
-        num = num % 100;
+        toWords += hundreds[Math.floor(num / 100)] + " ";
+        num %= 100;
     }
 
-    if (10 < num && num <= 19) {
-        toWords = toWords + teens[num - 10] + " ";
-    }
-
-    if (num >= 20) {
-        toWords = toWords + tens[Math.floor(num / 10)] + " ";
-        num = num % 10;
-        toWords = toWords + oneNum[num] + " ";
+    if (num >= 10 && num <= 19) {
+        toWords += teens[num - 10] + " ";
     } else {
-        toWords = toWords + oneNum[num] + " ";
+        if (num >= 20) {
+            toWords += tens[Math.floor(num / 10)] + " ";
+            num %= 10;
+        }
+        if (num > 0) {
+            toWords += oneNum[num] + " ";
+        }
     }
-    if (num < 1000) {
-        return (
-            oneNum[Math.floor(num / 100)] +
-            " " +
-            thousands[0] +
-            (num % 100 !== 0 ? " " + toReadable(num % 100) : "")
-        );
-    }
+
     return toWords.trim();
 }
 
-console.log(toReadable(555));
+module.exports = toReadable;
+
+console.log(toReadable(5555)); // "five thousand five hundred fifty five"
